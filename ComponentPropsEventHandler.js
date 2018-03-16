@@ -37,7 +37,9 @@ class Example extends React.Component {
   //Almost all functions that you define in React will be defined 
   //in this way, as methods in a class.
 
-  // DO NOT ADD COMMA!
+  //DO NOT ADD COMMA!
+  //Methods should never be comma-separated, if inside of a class body.
+  //This is to emphasize the fact that classes and object literals are different.
 
   render() {
     //render the Button instance
