@@ -7,7 +7,7 @@
 ## Table of Contents (yes, i know, it is that long)
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
-- [map in JSX](#map-in-JSX)
+- [dotmap in JSX](#dotmap-in-JSX)
 - [React.createElement](#reactcreateelement)
 - [ReactDOM](#reactdom)
 - [React library](#react-library)
@@ -78,7 +78,7 @@ function myFunc() {
 
 ## JSX Conditionals
 
-## .map in JSX
+## dotmap in JSX
 
 ## React.createElement
 
