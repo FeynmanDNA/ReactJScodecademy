@@ -1,14 +1,14 @@
 # Learning Notes from Codecademy ReactJS Tutorial :clap: :clap: :clap:
 ## and more(?)
 
-*[from Codecademy ReactJS tutorial](https://www.codecademy.com/courses/react-101/)*
+*[mostly from Codecademy ReactJS tutorial](https://www.codecademy.com/courses/react-101/),*
 *this markdown is typed/previewed with (https://dillinger.io)*
 
 ## Table of Contents (yes, i know, it is that long)
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
-- [.map in JSX](#.map-in-JSX)
-- [React.createElement](#react.createelement)
+- [map in JSX](#map-in-JSX)
+- [React.createElement](#reactcreateelement)
 - [ReactDOM](#reactdom)
 - [React library](#react-library)
 - [Component](#component)
