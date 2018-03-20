@@ -7,7 +7,7 @@
 ## Table of Contents (yes, i know, it is that long)
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
-- [dotmap in JSX](#dotmap-in-JSX)
+- [dotmap in JSX](#dotmap-in-jsx)
 - [React.createElement](#reactcreateelement)
 - [ReactDOM](#reactdom)
 - [React library](#react-library)
@@ -18,6 +18,7 @@
 *JSX is not essential to ReactJS, but many React apps do use JSX.*
 
 **What is JSX?**
+
 JSX is a syntax extension for JavaScript, but not valid JavaScript, and web browsers can't read it, yet. It has be compiled first, for example with Babel, especially when using **ES2015 and JSX**. Before the JSX reaches a web browser, a JSX compiler will translate any JSX into *vanilla* JavaScript.
 
 JSX elements are treated as JavaScript expressions. They can go anywhere that JavaScript expressions can go. JSX elements can be stored in JS objects, saved in a variable, etc. 
@@ -25,6 +26,7 @@ JSX elements are treated as JavaScript expressions. They can go anywhere that Ja
 **Note:** JSX expression must have exactly *one* outermost element. The solution is usually simple: wrap the JSX expression in a `<div></div>`.
 
 **class vs className**
+
 In HTML, it's common to use class as an attribute name, as in css's class selector:
 ```html
 <h1 class="big">Hey</h1>
@@ -36,12 +38,14 @@ In JSX, you can't use the word class! You have to use `className` instead:
 This is because JSX gets translated into JavaScript, and class is a reserved word in JavaScript. And when JSX is rendered, JSX className attributes are automatically rendered as class attributes in terms of HTML and CSS.
 
 **Self-Closing Tags**
+
 In JSX, you *have to* self-closing tags like `<input />`, `<br />`, `<img />`.
 
-**<h1>2+3</h1> vs 2 + 3**
+**`<h1>2+3</h1>` vs 2 + 3**
+
 Instead of adding 2 and 3, it printed out "2 + 3" as a string of text. Why?
 
-This happened because 2 + 3 is located in between <h1> and </h1> tags.
+This happened because 2 + 3 is located in between `<h1>` and `</h1>` tags.
 Any code in between the tags of a JSX element will be read as JSX, not as regular JavaScript! JSX doesn't add numbers - it reads them as text, just like HTML.
 **Note: In JSX, curly brackets wil indicate JavaScript injection/treatment.**
 ```javascript
@@ -51,6 +55,7 @@ Any code in between the tags of a JSX element will be read as JSX, not as regula
 ```
 
 **{Variable} in JSX**
+
 When you inject JavaScript into JSX, that JavaScript is part of the same environment as the rest of the JavaScript in your file.
 
 That means that you can access variables while inside of a JSX expression:
@@ -63,6 +68,7 @@ const greeting = <p>Hello, {name}!</p>;
 ```
 
 **Event Listeners in JSX, just like in HTML**
+
 You create an event listener by giving a JSX element a special attribute. Here's an example: `<img onClick={myFunc} />`.
 An event listener attribute's **name** should be something like `onClick` or `onMouseOver`: the word `on`, plus the type of event that you're listening for. Other event handlers include: `onCut onCompositionEnd onKeyDown onFocus onSubmit onMouseUp onScroll onLoad onTransitionEnd onToggle` etc.
 
