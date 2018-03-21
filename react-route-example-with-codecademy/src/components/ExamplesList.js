@@ -8,7 +8,6 @@ class ExamplesList extends React.Component {
     return (
       <nav>
         <ul>
-          <li><Link to='/'>Home</Link></li>
           <li><Link to='/JSXconditionals'>JSX Conditionals</Link></li>
           <li><Link to='/props'>Props</Link></li>
         </ul>

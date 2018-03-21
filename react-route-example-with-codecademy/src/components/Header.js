@@ -9,6 +9,7 @@ class Header extends React.Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Codecademy ReactJS Tutorials</h1>
+          <p>This header will never reload (hopefully) thanks to the virtual-DOM technology</p>
         </header>
       </div>
     );

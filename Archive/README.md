@@ -1,4 +1,4 @@
-# Learning Notes from Codecademy ReactJS Tutorial :clap: :clap: :clap:
+# Learning Notes from Codecademy ReactJS Tutorial *RUA!*
 ## and more(?)
 
 *[mostly from Codecademy ReactJS tutorial](https://www.codecademy.com/courses/react-101/),*
@@ -8,6 +8,7 @@
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
 - [dotmap in JSX](#dotmap-in-jsx)
+- [keys in JSX list](#keys-in-jsx-list)
 - [React.createElement](#reactcreateelement)
 - [ReactDOM](#reactdom)
 - [React library](#react-library)
@@ -84,9 +85,77 @@ function myFunc() {
 
 ## JSX Conditionals
 
+the words `if` and `else` should not be injected in between JSX tags.
+`&&` works best in conditionals that will sometimes do an action, but other times do nothing at all.
+```javascript
+const tasty = (
+  <ul>
+    <li>Applesauce</li>
+    { !baby && <li>Pizza</li> }
+    { age > 15 && <li>Brussels Sprouts</li> }
+    { age > 20 && <li>Oysters</li> }
+    { age > 25 && <li>Grappa</li> }
+  </ul>
+);
+```
+
 ## dotmap in JSX
 
+If you want to create a list of JSX elements, then `.map()` is often your best bet. It can look odd at first:
+```javascript
+const strings = ['Home', 'Shop', 'About Me'];
+const listItems = strings.map(string => <li>{string}</li>);
+<ul>{listItems}</ul>
+
+// This is fine in JSX, not in an explicit array:
+<ul>
+  <li>item 1</li>
+  <li>item 2</li>
+  <li>item 3</li>
+</ul>
+//JSX <li>s don't have to be in an array like this, but they can be.
+// This is also fine!
+const liArray = [
+  <li>item 1</li>, 
+  <li>item 2<li>, 
+  <li>item 3</li>
+];
+<ul>{liArray}</ul>
+```
+Arrow functions are a short syntax from ES6, use them in place of expressions like function (foo) {...}
+Old-school:
+`var a2 = a.map(function(s){ return s.length });`
+ECMAscript 6 using arrow functions
+`var a3 = a.map( s => s.length );`
+
+## keys in JSX list
+
+When you make a list in JSX, sometimes your list will need to include something called `keys`:
+```javascript
+<ul>
+  <li key="li-01">Example1</li>
+  <li key="li-02">Example2</li>
+  <li key="li-03">Example3</li>
+</ul>
+```
+A key is a JSX attribute. The attribute's name is key. The attribute's value should be something unique!
+keys don't do anything that you can see! React uses them internally to keep track of lists. 
+*Good to have them in lists!*
+
 ## React.createElement
+
+**You can write React code without using JSX at all!**
+The following JSX expression:
+`const h1 = <h1>Hello world</h1>;`
+can be rewritten without JSX, like this:
+```javascript
+const h1 = React.createElement(
+  "h1",
+  null,
+  "Hello, world"
+);
+```
+Every JSX element is secretly a call to React.createElement().
 
 ## ReactDOM
 ReactDOM is the name of a JavaScript library. This library contains several React-specific methods, dealing with the DOM.
