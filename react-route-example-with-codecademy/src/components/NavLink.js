@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link } from 'react-router-dom';
 
 //this creates links that can be navigate
 //between routes
@@ -10,7 +10,7 @@ class NavLink extends React.Component {
         <ul>
           <li><Link to='/'>Home</Link></li>
           <li><Link to='/'>Home</Link></li>
-          <li><Link to='/'>Home</Link></li>
+          <li><Link to='/schedule'>Schedule</Link></li>
         </ul>
       </nav>
     );

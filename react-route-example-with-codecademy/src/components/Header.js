@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../images/logo.svg';
+import logo from '../images/logo.svg'; // Tell Webpack this JS file uses this image
 import '../css/header.css';
 
 class Header extends React.Component {
