@@ -45,7 +45,7 @@ class Toggle extends React.Component {
         <button onClick={this.changeColorMood}>
           Click me to change color and mood
         </button>
-        <p>Now my mood is this.state.mood: {this.state.mood}</p>
+        <p>Now my mood is this.state.mood: <b>{this.state.mood}</b></p>
       </div>
     );
   }

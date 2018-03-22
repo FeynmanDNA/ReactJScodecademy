@@ -3,8 +3,6 @@ import heads from '../../images/heads.jpg';
 import tails from '../../images/tails.jpg';
 
 function handleClick(e) {
-  // Call this extremely useful function on an <img>.
-  // The <img> will become a picture of a doggy.
   e.target.setAttribute('src', tails);
   e.target.setAttribute('alt', tails);
 }
@@ -18,6 +16,7 @@ class change2Tails extends React.Component {
     return (
       <div>
         <h1>Click the picture to change from Heads to Tails</h1>
+        <p>Without involving state, this is calling a function handleClick(e) and its e.target.setAttribute(src, tails)</p>
         <img onClick={handleClick} src={heads} alt={heads} />
       </div>
     );

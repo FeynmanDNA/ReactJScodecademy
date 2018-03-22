@@ -14,6 +14,8 @@ class CoinOutCome extends React.Component {
   render() {
     return (
       <div>
+        <p>Call a function coinToss() that randomly return either heads or tails.</p>
+        <p>Math.random() &lt; 0.5 ? 'heads' : 'tails'</p>
         <h1>Coin toss outcome is:</h1>
         <img src={outPut} alt={outPut} />
       </div>

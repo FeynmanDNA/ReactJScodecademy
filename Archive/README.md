@@ -25,7 +25,7 @@
 - [defaultProps](#defaultprops)
 - [Setting Initial State](#setting-initial-state)
 - [Update state with setState](#update-state-with-setstate)
-- 
+- [Stateless Inherit Stateful](#stateless-inherit-stateful)
 
 ## Intro to JSX
 *JSX is not essential to ReactJS, but many React apps do use JSX.*
@@ -533,7 +533,24 @@ Think of `this.setState()` as actually being two things: `this.setState()`, imme
 
 That is why you can't call this.setState() from inside of the .render() method!
 
+## Stateless Inherit Stateful
+*Stateful component passes its state down to a stateless component.*
 
+You learned earlier that a component can change its `state` by calling `this.setState()`. You may have been wondering: how does a component change its `props`?
+
+The answer: it doesn't!
+
+**A component should never update `this.props`.**
+
+**A React component should use `props` to store information that can be changed, but can only be changed by a different component.**
+
+**A React component should use `state` to store information that the component itself can change.**
+
+- Define an Event Handler: To make a child component update its parent's `state`, the first step is something that you've seen before: you must define a state-changing method on the parent.
+- Pass the Event Handler: Now Parent must pass this function down to Child, so that Child can use it in an event listener.
+- Receive the Event Handler: You just passed a function down to Child that can change Parent's state!
+
+**Note: As with all methods that we pass in React, we must first bind `this` to our new method to the current instance**
 
 
 

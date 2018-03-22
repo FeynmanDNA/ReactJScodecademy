@@ -36,6 +36,7 @@ class AlertButton extends React.Component {
         <h1>Handle Events using props</h1>
         <p>Event handlers can be called and passed between components.</p> 
         <p>This special onClick attribute creates an event listener, listening for clicks</p>
+        <p>The button tag's event-listener: onClick=this.props.callAlert</p>
         <ButtonMsg callAlert={this.handleAlert} />
       </div>
     );
