@@ -13,6 +13,18 @@
 - [ReactDOM](#reactdom)
 - [React library](#react-library)
 - [Component](#component)
+- [this in Component](#this-in-component)
+- [Event handler in React](#event-handler-in-react)
+- [Component in Render Method](#component-in-render-method)
+- [File import export](#file-import-export)
+- [props](#props)
+- [Render a Component props](#render-a-component-props)
+- [props to make decisions](#props-to-make-decisions)
+- [props handleEvent onEvent](#props-handleevent-onevent)
+- [this props children](#this-props-children)
+- [defaultProps](#defaultprops)
+- [Setting Initial State](#setting-initial-state)
+- [Update state with setState](#update-state-with-setstate)
 - 
 
 ## Intro to JSX
@@ -68,21 +80,6 @@ const name = 'Gerdo';
 const greeting = <p>Hello, {name}!</p>;
 ```
 
-**Event Listeners in JSX, just like in HTML**
-
-You create an event listener by giving a JSX element a special attribute. Here's an example: `<img onClick={myFunc} />`.
-An event listener attribute's **name** should be something like `onClick` or `onMouseOver`: the word `on`, plus the type of event that you're listening for. Other event handlers include: `onCut onCompositionEnd onKeyDown onFocus onSubmit onMouseUp onScroll onLoad onTransitionEnd onToggle` etc.
-
-An event listener attribute's **value** should be a function. The above example would only work if myFunc were a valid function that had been defined elsewhere:
-```javascript
-function myFunc() {
-  alert('Make myFunc the pFunc... omg that was horrible i am so sorry');
-}
-
-<img onClick={myFunc} />
-```
-*Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In JSX, event listener names are written in camelCase, such as onClick or onMouseOver.*
-
 ## JSX Conditionals
 
 the words `if` and `else` should not be injected in between JSX tags.
@@ -101,7 +98,7 @@ const tasty = (
 
 ## dotmap in JSX
 
-If you want to create a list of JSX elements, then `.map()` is often your best bet. It can look odd at first:
+If you want to create a list of JSX elements, use `.map()`.
 ```javascript
 const strings = ['Home', 'Shop', 'About Me'];
 const listItems = strings.map(string => <li>{string}</li>);
@@ -202,7 +199,7 @@ In the body of your component class: the pair of curly braces after `React.Compo
 
 **Now Create a Component Instance**
 `YourNewClass` is now a working component class! It's ready to follow its instructions and make some React components, like in a factory :factory: :factory: :factory:
-JSX elements can be either HTML-like, or component instances. JSX uses capitalization to distinguish between the two! So must be a capitalized name:
+**JSX elements** can be either HTML-like, or component instances. JSX uses capitalization to distinguish between the two! So must be a capitalized name:
 `<YourNewClass />` or `<DragonKnight />`.
 
 **One property a React componnet MUST instruct in the body is a `render()` method.** 
@@ -210,6 +207,335 @@ JSX elements can be either HTML-like, or component instances. JSX uses capitaliz
 A render method must contain a `return` statement. Usually, this return statement returns a JSX expression.
 
 **What is the point of a render method?** Whenever you make a component, that component inherits all of the methods of its component class. Your component class has one method: YourNewClass.render(). Therefore, <MyComponentClass /> also has a method named render, which is inherited. To **call a component's render method**, you pass that component to `ReactDOM.render()`. ReactDOM.render() will tell <MyComponentClass /> to call its render method.
+
+In the return(), a multi-line JSX expression should always be wrapped in parentheses!
+
+**Put Logic in a Render Function**
+The logic controls etc should not be part of **the class declaration itself**, but should occur in a **method** like `render()`.
+```javascript
+class Random extends React.Component {
+  render() {
+    // First, some logic that must happen
+    // before rendering:
+    const n = Math.floor(Math.random() * 10 + 1);
+    // Next, a return statement
+    // using that logic:
+    return <h1>The number is {n}!</h1>;
+  }
+}
+```
+
+## this in Component
+
+cookbook example:
+```javascript
+//in ES6 classes you can omit function
+//hence you have a thing like render() {...
+class IceCreamGuy extends React.Component {
+  //IceCreamGuy has two methods: .food and .render()
+  get food() {
+    return 'ice cream';
+    //a getter is supposed to return a value
+    //about getters: they are basically syntactic sugar
+    //and make it possible to abstract away some details of your class
+  }
+  render() {
+    return <h1>I like {this.food}.</h1>;
+    //this refers to an instance of IceCreamGuy
+    //Why don't you need parentheses after this.food?
+    //Shouldn't it be this.food()?
+  }
+}//You don't need those parentheses because .food is a getter method
+```
+
+## Event handler in React
+
+**Event Listeners in JSX, just like in HTML**
+
+You create an event listener by giving a JSX element a special attribute. Here's an example: `<img onClick={myFunc} />`.
+An event listener attribute's **name** should be something like `onClick` or `onMouseOver`: the word `on`, plus the type of event that you're listening for. Other event handlers include: `onCut onCompositionEnd onKeyDown onFocus onSubmit onMouseUp onScroll onLoad onTransitionEnd onToggle` etc.
+
+An event listener attribute's **value** should be a function. The above example would only work if myFunc were a valid function that had been defined elsewhere:
+```javascript
+function myFunc() {
+  alert('Make myFunc the pFunc... omg that was horrible i am so sorry');
+}
+
+<img onClick={myFunc} />
+```
+*Note that in HTML, event listener names are written in all lowercase, such as onclick or onmouseover. In JSX, event listener names are written in camelCase, such as onClick or onMouseOver.*
+
+An event *handler* is a function that gets called in response to an event. In the above example, the event handler is myFunc().
+
+In React, you define event handlers as methods on a component class. Like this:
+```javascript
+class Button extends React.Component {
+  scream() {
+    alert('AAAAAAAAHHH!!!!!');
+    //scream() function calls alert() function
+  }
+
+  render() {
+    return <button onClick={this.scream}>AAAAAH!</button>;
+    //the reason you pass in this.scream to the handler and not this.scream()
+    //is that the handler needs a function object,
+    //not the result of the function - the handler will call the
+    //function when the right time comes (click)
+  }
+}
+```
+Notice that the component class has two methods: `.myFunc()` and `.render()`.
+
+## Component in Render Method
+
+Render methods can also return another kind of JSX: component instances.
+```javascript
+class Worker extends React.Component {
+  render() {
+    return <h1>Whooaa!</h1>;
+  }
+}
+
+class Master extends React.Component {
+  render() {
+    return <Worker />;
+  }
+}
+```
+In the above example, `Master`'s render method returns an instance of the `Worker` component class. 
+When a component renders another component, what happens is very similar to what happens when ReactDOM.render() renders a component.
+
+## File import export
+*Thanks to ES2015*
+
+If you use an `import` statement and begins with either a dot or a slash, then import will treat that string as a filepath. 
+
+*If your filepath doesn't have a file extension, then ".js" is assumed.*
+
+"Named" vs default export: {}
+
+```javascript
+//"named exports." 
+//When you use named exports, you always need to 
+//wrap your imported names in curly braces, such as:
+import { faveManifestos, alsoRan } from './Manifestos';
+
+/* place the keyword export immediately before something that 
+you want to export. That something can be any top-level 
+var, let, const, function, or class
+*/
+export class NavBar extends React.Component {
+  render() {
+    const pages = ['home', 'blog', 'pics', 'bio', 'art', 'shop', 'about', 'contact'];
+    const navLinks = pages.map(page => {
+      return (
+        <a href={'/' + page}>
+          {page}
+        </a>
+      )
+    });
+
+    return <nav>{navLinks}</nav>;
+  }
+}
+```
+
+## props
+
+A component's `props` is an object. It holds information about that component.
+To see a component's `props` object, you use the expression `this.props`.
+
+**Pass `props` to a Component**
+
+You can pass information to a React component, by giving that component an attribute:
+```javascript
+<MyComponent foo="bar" />
+// values that aren't strings are wrapped in curly braces{}
+<Greeting name="Frarthur" town="Flundon" age={2} haunted={false} />
+```
+
+## Render a Component props
+
+1 - Find the component class that is going to receive that information.
+2 - Include **`this.props.name-of-information`** in that **component class's render method's return statement**.
+```javascript
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hi there, {this.props.firstName}!</h1>;
+  }
+}
+ReactDOM.render(
+  <Greeting firstName='William' />, 
+  document.getElementById('app')
+);
+```
+
+*Note:*`props` is the name of the **object** that stores passed-in information. `this.props` refers to **that storage object**. At the same time, each piece of passed-in information is called a `prop`. This means that `props` could refer to two pieces of passed-in information, or it could refer to the object that stores those pieces of information :(
+
+## props to make decisions
+
+The Welcome component class detects `this.props.name` 's piece of information called name. However, Welcome never renders this piece of information! Instead, it uses the information to make a decision.
+```javascript
+export class Welcome extends React.Component {
+  render() {
+    if (this.props.name == 'Wolfgang Amadeus Mozart') {
+      return (
+      	<h2>
+      	  hello sir it is truly great to meet you here on the web
+      	</h2>
+      );
+    } else {
+      return (
+      	<h2>
+      	  WELCOME "2" MY WEB SITE BABYYY!!!!!
+      	</h2>
+      );
+    }
+  }
+}
+```
+## props handleEvent onEvent
+
+It is very common to pass event handler functions as `props`.
+You define an event handler as a method on the component class, just like the render method. **Almost all functions that you define in React will be defined in this way, as methods in a class.**
+
+DO NOT ADD COMMA! Methods should never be comma-separated, if inside of a class body. This is to emphasize the fact that **classes and object literals are different**.
+
+Attach a event handler function, and later get that passed-in function to get called. 
+```javascript
+class Button extends React.Component {
+  render () {
+    return (
+      //display a button html with a special event attribute
+      //and onclick will call the local function callAlert
+      <button onClick={this.props.callAlert}>
+        Click here for Message
+      </button>
+    );
+  }
+}
+```
+Attach any event handler to a JSX element: you give that JSX element a **special attribute**. The attribute's name should be something like `onClick` or `onHover`. **The attribute's value should be the event handler that you want to attach**.
+
+Parent component class  is the component class that defines the event handler and passes it.
+
+**One major source of confusion is the fact that names like onClick have special meaning, but only if they're used on HTML-like elements.**
+
+The name onClick does not create an event listener when used on <Button /> - it's just an arbitrary attribute name.
+
+Names like onClick only create event listeners if they're used on HTML-like JSX elements. Otherwise, they're just ordinary prop names.
+
+## this props children
+
+Every component's `props` object has a property named `children`.
+
+`this.props.children` will return everything in between a component's opening and closing JSX tags =>
+`this.props.children` would return everything in between <MyComponentClass> and </MyComponentClass>.
+
+```javascript
+<BigButton>
+  I am a child of BigButton.
+</BigButton>
+```
+In this example, `this.props.children` would equal the text, "I am a child of BigButton."
+If a component has more than one child between its JSX tags, then this.props.children will return those children in an **array**.
+
+You can make use of this array feature:
+```javascript
+    if (this.props.children instanceof Array) {
+    	titleText += 's';
+    }
+```
+
+
+## defaultProps
+
+You can give your component class a property named `defaultProps`. The defaultProps property should be equal to an object:
+```javascript
+class Button extends React.Component {
+  render() {
+    return (
+      <button>
+        {this.props.text}
+      </button>
+    );
+  }
+}
+
+// give the Button component class a defaultProps property
+Button.defaultProps = {
+  text:'make this property an object'
+};
+
+//if text attribute is specified on the spot, it will override
+ReactDOM.render(
+  <Button text="local override" />, 
+  document.getElementById('app')
+);
+```
+
+## Setting Initial State
+
+Unlike props, a component's `state` is not passed in from the outside. A component decides its own state.
+
+To make a component have state, give the component a state property. This property should be declared inside of a `constructor` method, like this:
+```javascript
+class App extends React.Component {
+  // constructor method begins here:
+  //give the constructor method a single parameter, props
+  constructor(props) {
+    //React components always have to call super 
+    //in their constructors to be set up properly.
+    super(props);
+    //this.state is an object
+    this.state = { title: 'Best App' };
+  }
+  render() {
+    //read your state's "title" property.
+    //use the expression this.state.name-of-property
+    return (
+      <h1>
+        {this.state.title}
+      </h1>
+    );
+  }
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('app')
+);
+```
+
+## Update state with setState
+
+`this.setState()` takes two arguments: an object that will update the component's state, and a callback. You basically never need the callback.
+
+Like virtual-DOM, `this.setState()` takes an object, and merges that object with the component's current state. If there are properties in the current state that aren't part of that object, then those properties remain how they were.
+
+The most common way to call this.setState() is to call a custom function that wraps a this.setState() call. :love_letter:
+
+```javascript
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { color: green };  
+    //in React, whenever you define an event handler that uses this
+    //you need to add 
+    //this.methodName = this.methodName.bind(this) 
+    //to your constructor function.
+    this.changeColor = this.changeColor.bind(this);
+  }
+```
+Any time that you call `this.setState()`, `this.setState()` AUTOMATICALLY calls `.render()` as soon as the state has changed.
+
+Think of `this.setState()` as actually being two things: `this.setState()`, immediately followed by `.render()`.
+
+That is why you can't call this.setState() from inside of the .render() method!
+
+
+
+
 
 
 

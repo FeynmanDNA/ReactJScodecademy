@@ -1,17 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
-class Button extends React.Component {
-  render () {
-    return (
-      //display a button html with a special event attribute
-      //and onclick will call the local function callAlert
-      <button onClick={this.props.callAlert}>
-        Click here for Message
-      </button>
-    );
-  }
-}
+import ButtonMsg from './ButtonForProps';
 
 /*One major source of confusion is the fact that 
  * names like onClick have special meaning, but 
@@ -24,7 +12,7 @@ class Button extends React.Component {
  * creates an event listener, listening for clicks
  */
 
-class Example extends React.Component {
+class AlertButton extends React.Component {
   //pass functions as props
   //very common to pass event handler functions
   handleAlert() {
@@ -44,7 +32,14 @@ class Example extends React.Component {
   render() {
     //render the Button instance
     return (
-      <Button callAlert={this.handleAlert} />
+      <div>
+        <h1>Handle Events using props</h1>
+        <p>Event handlers can be called and passed between components.</p> 
+        <p>This special onClick attribute creates an event listener, listening for clicks</p>
+        <ButtonMsg callAlert={this.handleAlert} />
+      </div>
     );
   }
 }
+
+export default AlertButton;

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 class List extends React.Component {
   render() {
@@ -11,7 +10,7 @@ class List extends React.Component {
     //in between a component's opening and closing JSX tags.
     return (
       <div>
-        <h1>{titleText}</h1>
+        <b>{titleText}</b>
         <ul>{this.props.children}</ul>
       </div>
     );
@@ -22,28 +21,29 @@ class List extends React.Component {
  * in between <MyComponentClass> and </MyComponentClass>
  */
 
-class App extends React.Component {
+class InstanceChildren extends React.Component {
   render() {
     return (
       <div>
-        <List type='Living Musician'>
-          <li>Sachiko M</li>
-          <li>Harvey Sid Fisher</li>
-          <h1>lala TEST</h1>
+        <p>if (this.props.children instanceof Array), then titleText += 's';</p>
+        <List type='Book'>
+          <li>Book</li>
         </List>
-        <List type='Living Musician'>
-          <li>Test props children array</li>
-          123
+        <List type='Book'>
+          <li>Book</li>
+          <li>Book</li>
+          <li>Book</li>
         </List>
-        <List type='Living Cat Musician'>
-          <li>Nora the Piano Cat</li>
+        <List type='School'>
+          <li>School</li>
+          <li>School</li>
+        </List>
+        <List type='School'>
+          <li>School</li>
         </List>
       </div>
     );
   }
 }
 
-ReactDOM.render(
-  <App />, 
-  document.getElementById('app')
-);
+export default InstanceChildren;

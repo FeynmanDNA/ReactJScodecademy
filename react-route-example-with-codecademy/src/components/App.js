@@ -3,6 +3,8 @@ import Header from './Header';
 import Home from './Home';
 import ExamplesList from './ExamplesList';
 import JSXconditionals from './ExamplesDir/JSXconditionals';
+import propsBasics from './ExamplesDir/props';
+import stateBasics from './ExamplesDir/state';
 import {Switch,Route,Link} from 'react-router-dom';
 import '../css/body.css'; // Tell Webpack to use this file
 
@@ -24,7 +26,8 @@ class App extends React.Component {
               </div>
             )} />
             <Route path='/JSXconditionals' component={JSXconditionals} />
-            <Route path='/test' render={() => <h1>test route function</h1>} />
+            <Route path='/props' component={propsBasics} />
+            <Route path='/state' component={stateBasics} />
             <Route render={() => <h1>Page not found</h1>} />
             <Route />
             <Route />

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 const green = '#39D1B4';
 const yellow = '#FFD712';
@@ -7,12 +6,15 @@ const yellow = '#FFD712';
 class Toggle extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { color: green };  
+    this.state = {
+      color: green,
+      mood: "good"
+    };  
     //in React, whenever you define an event handler that uses this
     //you need to add 
     //this.methodName = this.methodName.bind(this) 
     //to your constructor function.
-    this.changeColor = this.changeColor.bind(this);
+    this.changeColorMood = this.changeColorMood.bind(this);
   }
   
   //A component changes its state by calling the function this.setState()
@@ -22,11 +24,15 @@ class Toggle extends React.Component {
   //this.setState() takes an object, and merges that object 
   //with the component's current state
 	
-  changeColor() {
+  changeColorMood() {
     const setColor = this.state.color === yellow ? green : yellow;
+    const setMood = this.state.mood === "good" ? "bad" : "good";
     //most common way to call this.setState() is to call a 
     //custom function that wraps a this.setState() call
-    this.setState({color: setColor});
+    this.setState({
+      color: setColor,
+      mood: setMood
+    });
   }
 
   //onClick attribute with a value of {this.changeColor}.
@@ -34,12 +40,12 @@ class Toggle extends React.Component {
   render() {
     return (
       <div style={{background: this.state.color }}>
-        <h1>
-          Change my color
-        </h1>
-        <button onClick={this.changeColor}>
-          Click me to change color
+        <h1>style= background: this.state.color</h1>
+        <p>onClick will call the changeColorMood() to update the state</p>
+        <button onClick={this.changeColorMood}>
+          Click me to change color and mood
         </button>
+        <p>Now my mood is this.state.mood: {this.state.mood}</p>
       </div>
     );
   }
@@ -51,7 +57,4 @@ class Toggle extends React.Component {
 
 //That is why you can't call this.setState() from inside of the .render() method!
 
-ReactDOM.render(
-  <Toggle />,
-  document.getElementById('app')
-);
+export default Toggle;

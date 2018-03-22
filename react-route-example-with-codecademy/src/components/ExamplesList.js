@@ -10,6 +10,7 @@ class ExamplesList extends React.Component {
         <ul>
           <li><Link to='/JSXconditionals'>JSX Conditionals</Link></li>
           <li><Link to='/props'>Props</Link></li>
+          <li><Link to='/state'>State</Link></li>
         </ul>
       </nav>
     );
