@@ -22,9 +22,6 @@ export class ChangeNameChild extends React.Component {
       //<h1></h1>, you will need the dropdown menu to 
       //change the value of this.props.name
       <div>
-        <h1>
-          {this.props.dropDownName} is an awesome language.
-        </h1>
         <select id="language-names" onChange={this.respondChange}>
           <option value="JavaScript">
             JavaScript

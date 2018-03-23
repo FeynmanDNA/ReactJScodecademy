@@ -1,7 +1,7 @@
 # Learning Notes from Codecademy ReactJS Tutorial *RUA!*
 ## and more(?)
 
-*[mostly from Codecademy ReactJS tutorial](https://www.codecademy.com/courses/react-101/),*
+*[mostly from Codecademy ReactJS tutorial](https://www.codecademy.com/learn/react-101),*
 *this markdown is typed/previewed with (https://dillinger.io)*
 
 ## Table of Contents (yes, i know, it is that long)
@@ -26,6 +26,14 @@
 - [Setting Initial State](#setting-initial-state)
 - [Update state with setState](#update-state-with-setstate)
 - [Stateless Inherit Stateful](#stateless-inherit-stateful)
+- [React Styles](#react-styles)
+- [Separating Container Components from Presentational Components](#separating-container-components-from-presentational-components)
+- [Stateless Functional Component](#stateless-functional-component)
+- [propTypes](#proptypes)
+- [React Forms](#react-forms)
+- [Controlled vs Uncontrolled](#controlled-vs-uncontrolled)
+- [Mounting Lifecycle Methods](#mounting-lifecycle-methods)
+- [Updating or Unmounting Lifecycle Methods](#updating-or-unmounting-lifecycle-methods)
 
 ## Intro to JSX
 *JSX is not essential to ReactJS, but many React apps do use JSX.*
@@ -546,11 +554,268 @@ The answer: it doesn't!
 
 **A React component should use `state` to store information that the component itself can change.**
 
+One thing about components is that they should only have one job.
+One component for displaying the name, and a different component for allowing a user to change the name. Child offered a way to change that name. Sibling displayed a name.
+
 - Define an Event Handler: To make a child component update its parent's `state`, the first step is something that you've seen before: you must define a state-changing method on the parent.
 - Pass the Event Handler: Now Parent must pass this function down to Child, so that Child can use it in an event listener.
 - Receive the Event Handler: You just passed a function down to Child that can change Parent's state!
+- Then stateful Parent passes down its state to a different stateless component Sibling
+- Stateless component Sibling receives the state and displays it.
 
 **Note: As with all methods that we pass in React, we must first bind `this` to our new method to the current instance**
+
+## React Styles
+
+**Inline Styles**
+An inline style is a style that's written as an attribute, like this: `style={{ color: 'red' }}`. The outer curly braces inject JavaScript into JSX. They say, "everything between us should be read as JavaScript, not JSX." The inner curly braces create a JavaScript object literal. They make this a valid JavaScript object: `{ color: 'red' }`.
+
+An alternative that's often nicer is to store a style object in a variable, and then inject that variable into JSX.
+
+```javascript
+const styles = {
+  color: 'darkcyan',
+  background: 'mintcream'
+};
+
+export class StyledClass extends React.Component {
+  render() {
+    return (
+      <h1 style={styles}>
+        Hello world
+      </h1>
+    );
+  }
+}
+```
+In regular JavaScript, style names are written in hyphenated-lowercase:
+```javascript
+const styles = {
+  'margin-top':       "20px",
+  'background-color': "green"
+};
+```
+In React, those same names are instead written in **camelCase**:
+```javascript
+const styles = {
+  marginTop:       "20px",
+  backgroundColor: "green"
+};
+```
+For example, `margintop` will have no effect on the style!
+
+In regular JS, style values are almost always strings. Even if a style value is numeric.
+In React, if you write a style value as a **number**, then the unit "px" is assumed. For units other than "px," you can use a string.
+```javascript
+const styles = {
+  background: 'lightblue',
+  color: 'darkred',
+  marginTop: 100,
+  fontSize: 50
+}
+```
+
+## Separating container components from presentational components
+
+If a component has to have `state`, make calculations based on `props`, or manage any other complex logic, then that component shouldn't also have to render HTML-like JSX.
+
+Instead of rendering HTML-like JSX, the component should **render another component**. It should be **that component**'s job to render HTML-like JSX.
+
+## Stateless Functional Component
+
+If you have a component class with nothing but a `render` function, then you can rewrite that component class in a very different way. Instead of using `React.Component`, you can write it as JavaScript function!
+
+A component class written as a function is called a stateless functional component. Stateless functional components usually have `props` passed to them.
+
+To access these `props`, give your stateless functional component a parameter. This parameter will automatically be equal to the component's props object.
+
+```javascript
+// A component class written in the usual way:
+export class MyComponentClass extends React.Component {
+  render() {
+    return <h1>Hello world</h1>;
+  }
+}
+// Normal way to display a prop using a variable:
+export class MyComponentClass extends React.component {
+  render() {
+  	let title = this.props.title;
+    return <h1>{title}</h1>;
+  }
+}
+
+
+// The same component class, written as a stateless functional component:
+export const MyComponentClass = () => {
+  return <h1>Hello world</h1>;
+}
+// Stateless functional component way to display a prop:
+export const MyComponentClass = (props) => {
+  return <h1>{props.title}</h1>;
+}
+// Stateless functional component way to display a prop using a variable:
+export const MyComponentClass = (props) => {
+	let title = props.title;
+  return <h1>{title}</h1>;
+}
+```
+
+Not only are stateless functional components more concise, but they will subtly influence **how you think about components in a positive way**. They emphasize the fact that **components are basically functions**! 
+
+**A component takes two optional inputs, `props` and `state`, and outputs HTML and/or other components.**
+
+## propTypes
+
+`propTypes` are uesful for two reasons: 1.prop validation (for console), 2. documentation (when you have many files...)
+
+If a component class expects a `prop`, then you can give that component class a propType!
+`<MessageDisplayer message="something" />`
+```javascript
+export class MessageDisplayer extends React.Component {
+  render() {
+    return <h1>{this.props.message}</h1>;
+  }
+}
+
+// This propTypes object should have
+// one property for each expected prop:
+MessageDisplayer.propTypes = {
+  message: React.PropTypes.string
+};
+```
+The value of each property in propTypes should fit this pattern:
+`React.PropTypes.expected-data-type-goes-here`
+like 
+```javascript
+BestSeller.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  author: React.PropTypes.string.isRequired,
+  weeksOnList: React.PropTypes.number.isRequired
+};
+```
+If you add `.isRequired` to a `propType`, then you will get a console warning if that `prop` isn't sent.
+
+**Note: value of propTypes is an object**, not a function!
+
+## React Forms
+
+In a React form, you want the server to know about every new character or deletion, as soon as it happens. That way, your screen will always be in sync with the rest of your application.
+
+Give `<input />` an `onChange` attribute. Set `onChange`'s value equal to `{this.handleUserInput}`.
+
+Define a function that gets called whenever a user enters or deletes any character. This function will be an *event handler*. It will listen for change events. 
+
+## Controlled vs Uncontrolled
+
+An uncontrolled component is a component that maintains its own internal state. A controlled component is a component that does not maintain any internal state. Since a controlled component has no state, it must be controlled by someone else.
+
+If a `<Square />` does not have state, only listens to props, then `<Square />` no longer keeps its own state. 
+It receives its value from its parent `<Board />` and informs its parent when it’s clicked. 
+We call components like this **controlled components**.
+
+The fact that `<input />` keeps track of information makes it an uncontrolled component. It maintains its own internal state, by remembering data about itself.
+
+A controlled component, on the other hand, has no memory. If you ask it for information about itself, then it will have to get that information through `props`. Most React components are controlled.
+
+## Mounting Lifecycle Methods
+
+**What's a Lifecycle Method?**
+Lifecycle methods are methods that get called at certain moments in a component's life.
+
+You can write a lifecycle method that gets called right before a component renders for the first time.
+
+You can write a lifecycle method that gets called right after a component renders, every time except for the first time.
+
+There are three categories of lifecycle methods: **mounting, updating, and unmounting**.
+
+A component "mounts" when it renders for the first time. This is when mounting lifecycle methods get called.
+
+**There are three mounting lifecycle methods**:
+
+- `componentWillMount`
+- `render`
+- `componentDidMount`
+
+When a component mounts, it **automatically calls these three methods, in order**.
+
+The first mounting lifecycle method is called `componentWillMount`.
+
+When a component renders for the first time, `componentWillMount` gets called right **before render**.
+
+```javascript
+export class Example extends React.Component {
+  componentWillMount() {
+    alert('component is about to mount!');
+  }
+
+  render() {
+    return <h1>Hello world</h1>;
+  }
+}
+
+ReactDOM.render(
+  <Example />,
+  document.getElementById('app')
+);
+
+setTimeout(() => {
+  ReactDOM.render(
+    <Example />,
+    document.getElementById('app')
+  );
+}, 2000);
+```
+**Note!** Two seconds later, `<Example />` renders again. `componentWillMount` does NOT get called, because mounting lifecycle events only execute the first time that a component renders.
+
+You can call `this.setState` from within `componentWillMount` to interfere with the `state` before `render` can. 
+```javascript
+export class Example2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
+
+  componentWillMount() {
+    this.setState({ text: 'Hello world' });
+  }
+
+  render() {
+    return <h1>{this.state.text}</h1>;
+  }
+}
+```
+
+When a component renders for the first time, `componentDidMount` gets called right after the HTML from `render` has finished loading. 
+
+If your React app uses AJAX to fetch initial data from an API, then `componentDidMount` is the place to make that AJAX call. More generally, `componentDidMount` is a good place to connect a React app to external applications, such as web APIs or JavaScript frameworks. `componentDidMount` is also the place to set timers using `setTimeout` or `setInterval`.
+
+```javascript
+  componentDidMount() {
+    setTimeout(() => {
+      alert("sth");
+    }, 2000);
+  }
+```
+
+## Updating or Unmounting Lifecycle Methods
+
+**What is updating?**
+
+The first time that a component instance renders, it does not update. A component updates every time that it renders, starting with the second render.
+
+There are **five updating lifecycle methods**:
+
+- componentWillReceiveProps
+- shouldComponentUpdate
+- componentWillUpdate
+- render
+- componentDidUpdate
+
+**Whenever a component instance updates, it automatically calls all five of these methods, in order**.
+
+
+
+
 
 
 

@@ -1,8 +1,7 @@
 //GuineaPigsContainer contains a lot of logic. 
 //It shouldn't also have to render HTML-like JSX
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { GuineaPigs } from '../components/GuineaPigs';
+import { GuineaPigs } from './PresentationalComponent';
 
 const GUINEAPATHS = [
   'https://s3.amazonaws.com/codecademy-content/courses/React/react_photo-guineapig-1.jpg',
@@ -29,7 +28,7 @@ class GuineaPigsContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.nextGP, 5000);
+    this.interval = setInterval(this.nextGP, 1500);
   }
 
   componentWillUnmount() {
@@ -46,7 +45,4 @@ class GuineaPigsContainer extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <GuineaPigsContainer />,
-  document.getElementById('app')
-);
+export default GuineaPigsContainer;

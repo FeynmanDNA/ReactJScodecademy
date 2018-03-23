@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 //In regular JS, style values are almost always strings. 
 //Even if a style value is numeric 
@@ -20,9 +19,20 @@ const styles = {
 //They make this a valid JavaScript object:
 //{ color: 'red' }
 
-const styleMe = <h1 style={styles}>Please style me! I am so bland!</h1>;
+class styleMe extends React.Component{
+  render() {
+    return (
+      <div>
+        <pre>
+        background: 'lightblue',
+        color: 'darkred',
+        marginTop: 100,
+        fontSize: 50
+        </pre>
+        <h1 style={styles}>RUA!</h1>
+      </div>
+    );
+  }
+}
 
-ReactDOM.render(
-  styleMe, 
-  document.getElementById('app')
-);
+export default styleMe;

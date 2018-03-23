@@ -5,6 +5,9 @@ import ExamplesList from './ExamplesList';
 import JSXbasics from './ExamplesDir/JSX';
 import propsBasics from './ExamplesDir/props';
 import stateBasics from './ExamplesDir/state';
+import GuineaPigsContainer from './ExamplesDir/ConatinerComponent';
+import FormInput from './ExamplesDir/formInputEvent';
+import LifecycleMethods from './ExamplesDir/LifecycleMethods';
 import {Switch,Route,Link} from 'react-router-dom';
 import '../css/body.css'; // Tell Webpack to use this file
 
@@ -28,6 +31,9 @@ class App extends React.Component {
             <Route path='/JSX' component={JSXbasics} />
             <Route path='/props' component={propsBasics} />
             <Route path='/state' component={stateBasics} />
+            <Route path='/Container' component={GuineaPigsContainer} />
+            <Route path='/ReactForm' component={FormInput} />
+            <Route path='/LifecycleMethods' component={LifecycleMethods} />
             <Route render={() => <h1>Page not found</h1>} />
           </Switch>
         </div>
