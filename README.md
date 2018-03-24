@@ -5,6 +5,7 @@
 *this markdown is typed/previewed with (https://dillinger.io)*
 
 ## Table of Contents (yes, i know, it is that long)
+- [Some Useful Advice from Olafs](#some-usefu-advice-from-olafs)
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
 - [dotmap in JSX](#dotmap-in-jsx)
@@ -34,6 +35,24 @@
 - [Controlled vs Uncontrolled](#controlled-vs-uncontrolled)
 - [Mounting Lifecycle Methods](#mounting-lifecycle-methods)
 - [Updating or Unmounting Lifecycle Methods](#updating-or-unmounting-lifecycle-methods)
+
+## Some Useful Advice from Olafs
+
+Functions defined inside React Component class don't always have `this` bound correctly. Only special React functions have `this` - `render()`, `componentWillMount()`, etc.
+
+You can make the function inherit `this` from the class by changing how you define it:
+`methodName = () => {...}`, which will make it part of the class, and it takes `this` from the class. 
+
+`.bind(this)` can achieve similar things, but that will be too much to maintain. 
+
+And also functions in JS are objects.
+`const fun = () => 3;` this function returns 3. 
+`fun` is the function **object**, `fun()` is the **invocation** of the function and returns 3. 
+
+Some functions take functions and call it, like eventListener `onClick`. They take a function and call it later. So you give them the function **object**, not the return value of the invocation. 
+
+And when passing `props`, you bind variables to the *new name* of the `prop`.
+`this.props.newName`
 
 ## Intro to JSX
 *JSX is not essential to ReactJS, but many React apps do use JSX.*
@@ -655,7 +674,7 @@ export const MyComponentClass = (props) => {
 }
 // Stateless functional component way to display a prop using a variable:
 export const MyComponentClass = (props) => {
-	let title = props.title;
+  let title = props.title;
   return <h1>{title}</h1>;
 }
 ```
@@ -767,25 +786,73 @@ setTimeout(() => {
 ```
 **Note!** Two seconds later, `<Example />` renders again. `componentWillMount` does NOT get called, because mounting lifecycle events only execute the first time that a component renders.
 
+You can call `this.setState` from within `componentWillMount` to interfere with the `state` before `render` can. 
+```javascript
+export class Example2 extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
 
+  componentWillMount() {
+    this.setState({ text: 'Hello world' });
+  }
 
+  render() {
+    return <h1>{this.state.text}</h1>;
+  }
+}
+```
 
+When a component renders for the first time, `componentDidMount` gets called right after the HTML from `render` has finished loading. 
+
+If your React app uses AJAX to fetch initial data from an API, then `componentDidMount` is the place to make that AJAX call. More generally, `componentDidMount` is a good place to connect a React app to external applications, such as web APIs or JavaScript frameworks. `componentDidMount` is also the place to set timers using `setTimeout` or `setInterval`.
+
+```javascript
+  componentDidMount() {
+    setTimeout(() => {
+      alert("sth");
+    }, 2000);
+  }
+```
 
 ## Updating or Unmounting Lifecycle Methods
 
+**What is updating?**
 
+The first time that a component instance renders, it does not update. A component updates every time that it renders, starting with the second render.
 
+There are **five updating lifecycle methods**:
 
+- componentWillReceiveProps
+- shouldComponentUpdate
+- componentWillUpdate
+- render
+- componentDidUpdate
 
+**Whenever a component instance updates, it automatically calls all five of these methods, in order**.
 
+The first updating lifecycle method is called `componentWillReceiveProps`.
 
+When a component instance **updates**, `componentWillReceiveProps` gets called **before the rendering begins**.
+`componentWillReceiveProps` only gets called if the component will receive `props`:
+```javascript
+// componentWillReceiveProps will get called here:
+ReactDOM.render(
+  <Example prop="myVal" />,
+  document.getElementById('app')
+);
 
+// componentWillReceiveProps will NOT get called here:
+ReactDOM.render(
+  <Example />,
+  document.getElementById('app')
+);
+```
+`componentWillReceiveProps` automatically gets passed one argument: an **object** called `nextProps`. `nextProps` is a preview of the upcoming `props` **object** that the component is about to receive. (It is called nextProps since it is UPDATING a prop)
 
+`componentDidUpdate` is usually used for interacting with things outside of the React environment, like the browser or APIs. It's similar to `componentWillUpdate` in that way, except that it gets called after `render` instead of before.
 
+**componentWillUnmount**
 
-
-
-
-
-
-
+A component's unmounting period occurs when the component is removed from the DOM. This could happen if the DOM is rerendered without the component, or if the user navigates to a different website or closes their web browser. 

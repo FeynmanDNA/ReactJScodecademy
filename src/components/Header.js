@@ -1,4 +1,5 @@
 import React from 'react';
+import Clock from './ExamplesDir/Clock';
 import logo from '../images/logo.svg'; // Tell Webpack this JS file uses this image
 import '../css/header.css';
 
@@ -8,8 +9,8 @@ class Header extends React.Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
+          <Clock />
           <h1 className="App-title">Codecademy ReactJS Tutorials</h1>
-          <p>This header will never reload (hopefully) thanks to the virtual-DOM technology</p>
         </header>
       </div>
     );
