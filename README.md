@@ -5,6 +5,7 @@
 *this markdown is typed/previewed with (https://dillinger.io)*
 
 ## Table of Contents (yes, i know, it is that long)
+- [Deployment to Github Page](#deployment-to-github-page)
 - [Some Useful Advice from Olafs](#some-usefu-advice-from-olafs)
 - [Intro to JSX](#intro-to-jsx)
 - [JSX Conditionals](#jsx-conditionals)
@@ -35,6 +36,15 @@
 - [Controlled vs Uncontrolled](#controlled-vs-uncontrolled)
 - [Mounting Lifecycle Methods](#mounting-lifecycle-methods)
 - [Updating or Unmounting Lifecycle Methods](#updating-or-unmounting-lifecycle-methods)
+
+## Deployment to Github Page
+
+First deploy to Github page using this guide(#https://medium.freecodecamp.org/surge-vs-github-pages-deploying-a-create-react-app-project-c0ecbf317089). Briefly, first edit package.json with your homepage field, and add  `"deploy" : "npm run build&&gh-pages -d build"`. You will need gh-pages, `npm install --save-dev gh-pages`. 
+
+**Note:** Github page is going to mess up your root route in React Route, see more discussion here(#https://github.com/facebook/create-react-app/issues/1765). You probably want to add this:
+```
+<Route exact path={process.env.PUBLIC_URL + '/'} render={props => (...
+```
 
 ## Some Useful Advice from Olafs
 
