@@ -23,12 +23,12 @@ class styleMe extends React.Component{
   render() {
     return (
       <div>
-        <pre>
+        <p>
         background: 'lightblue',
         color: 'darkred',
         marginTop: 100,
         fontSize: 50
-        </pre>
+        </p>
         <h1 style={styles}>RUA!</h1>
       </div>
     );
