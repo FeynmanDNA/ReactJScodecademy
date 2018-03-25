@@ -14,7 +14,7 @@ import FormInput from './ExamplesDir/formInputEvent';
 import LifecycleMethods from './ExamplesDir/LifecycleMethods';
 
 /* Import from react-router-dom */
-import {Switch,Route,Link} from 'react-router-dom';
+import {Switch,Route} from 'react-router-dom';
 
 /* icd2k3 BreadCrumbs */
 import Breadcrumbs from './icd2k3Breadcrumbs';
