@@ -1,5 +1,8 @@
+/* Import ReactJS */
 import React from 'react';
 import Header from './Header';
+
+/* Import Components */
 import Home from './Home';
 import ExamplesList from './ExamplesList';
 import JSXbasics from './ExamplesDir/JSX';
@@ -8,7 +11,11 @@ import stateBasics from './ExamplesDir/state';
 import GuineaPigsContainer from './ExamplesDir/ConatinerComponent';
 import FormInput from './ExamplesDir/formInputEvent';
 import LifecycleMethods from './ExamplesDir/LifecycleMethods';
+
+/* Import from react-router-dom */
 import {Switch,Route,Link} from 'react-router-dom';
+
+/* Import files */
 import '../css/body.css'; // Tell Webpack to use this file
 
 class App extends React.Component {
