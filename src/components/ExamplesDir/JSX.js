@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch,Route,Link} from 'react-router-dom';
+import {Route,Link} from 'react-router-dom';
 import CoinOutCome from './JSXconditionalWithIf';
 import change2Tails from './JSXeventListener';
 import styleMe from './StyleSyntax';

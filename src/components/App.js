@@ -1,8 +1,9 @@
 /* Import ReactJS */
 import React from 'react';
-import Header from './Header';
 
 /* Import Components */
+import Header from './Header';
+import Footer from './Footer';
 import Home from './Home';
 import ExamplesList from './ExamplesList';
 import JSXbasics from './ExamplesDir/JSX';
@@ -14,6 +15,9 @@ import LifecycleMethods from './ExamplesDir/LifecycleMethods';
 
 /* Import from react-router-dom */
 import {Switch,Route,Link} from 'react-router-dom';
+
+/* icd2k3 BreadCrumbs */
+import Breadcrumbs from './icd2k3Breadcrumbs';
 
 /* Import files */
 import '../css/body.css'; // Tell Webpack to use this file
@@ -27,7 +31,7 @@ class App extends React.Component {
       <div>
         <Header />
         <div className="container">
-          <Link to='/'>BreadCrumb goes here</Link>
+          <Breadcrumbs />
           <Switch>
             <Route exact path='/' render={props => (
               <div>
@@ -43,6 +47,7 @@ class App extends React.Component {
             <Route path='/LifecycleMethods' component={LifecycleMethods} />
             <Route render={() => <h1>Page not found</h1>} />
           </Switch>
+          <Footer />
         </div>
       </div>
     );
