@@ -33,7 +33,7 @@ class App extends React.Component {
         <div className="container">
           <Breadcrumbs />
           <Switch>
-            <Route exact path={process.env.PUBLIC_URL + '/'} render={props => (
+            <Route exact path='/' render={props => (
               <div>
                 <Home />
                 <ExamplesList />

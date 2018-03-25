@@ -3,6 +3,7 @@
 
 *[mostly from Codecademy ReactJS tutorial](https://www.codecademy.com/learn/react-101),*
 *this markdown is typed/previewed with (https://dillinger.io)*
+*the web-app of this repo is here @ (absurd-downtown.surge.sh)
 
 ## Table of Contents (yes, i know, it is that long)
 - [Deployment to Github Page](#deployment-to-github-page)
@@ -39,12 +40,11 @@
 
 ## Deployment to Github Page
 
-First deploy to Github page using this guide(https://medium.freecodecamp.org/surge-vs-github-pages-deploying-a-create-react-app-project-c0ecbf317089). Briefly, first edit package.json with your homepage field, and add  `"deploy" : "npm run build&&gh-pages -d build"`. You will need gh-pages, `npm install --save-dev gh-pages`. 
+Dont.
 
-**Note:** Github page is going to mess up your root route in React Route, see more discussion here(https://github.com/facebook/create-react-app/issues/1765). You probably want to add this:
-```
-<Route exact path={process.env.PUBLIC_URL + '/'} render={props => (...
-```
+**Note:** Github page is going to mess up your root route in React Route, see more discussion here(https://github.com/facebook/create-react-app/issues/1765).
+
+I chose to deploy to Surge.sh using this [guide](https://medium.freecodecamp.org/surge-vs-github-pages-deploying-a-create-react-app-project-c0ecbf317089). It will be a random_url.surge.sh though :game_die: 
 
 ## Some Useful Advice from Olafs
 
